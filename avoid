@@ -1,0 +1,130 @@
+    render() {
+        let AreaBehavior = Platform.select({ios:'padding', android:null});
+        let AreaOffset = Platform.select({ios:64, android:null});
+
+        return (
+             <KeyboardAvoidingView style={styles.container} behavior={AreaBehavior} keyboardVerticalOffset={AreaOffset}>
+                <View>
+                    <Image source={require('../assets/wave-grey-cadastro.png')} style={styles.bgImage}/>
+                </View>
+                <BackButton return={() => this.props.navigation.goBack()}/>
+                <View style={styles.logoArea}>
+                    <View>
+                        <Logo/>
+                    </View>
+                </View>
+
+                <View style={styles.formArea}>
+                    <Item floatingLabel style={styles.formItem} success={this.props.successName}
+                          error={this.props.errorName}>
+                        <Label style={styles.formLabel}>Nome Completo</Label>
+                        <Input
+                            value={this.props.name}
+                            onChangeText={this.props.HandlerName}
+                            autoCapitalize="none"
+                            blurOnSubmit={false}
+                            getRef={input => {
+                                this.firstNameRef = input;
+                            }}
+                            onSubmitEditing={() => {
+                                this.emailRef._root.focus();
+                            }}
+                            returnKeyType={"next"}
+                        />
+                        <Icon
+                            type="FontAwesome"
+                            name={this.props.name != "" ? "check-circle" : ""}
+                            style={this.props.styleName}/>
+                    </Item>
+                    <Item floatingLabel style={styles.formItem} success={this.props.successEmail}
+                          error={this.props.errorEmail}>
+                        <Label style={styles.formLabel}>E-mail</Label>
+                        <Input
+                            value={this.props.email}
+                            onChangeText={this.props.HandlerEmail}
+                            autoCapitalize="none"
+                            blurOnSubmit={false}
+                            getRef={input => {
+                                this.emailRef = input;
+                            }}
+                            onSubmitEditing={() => {
+                                this.userRef._root.focus();
+                            }}
+                            returnKeyType={"next"}
+                        />
+                        <Icon
+                            type="FontAwesome"
+                            name={this.props.email != "" ? "check-circle" : ""}
+                            style={this.props.styleEmail}/>
+                    </Item>
+                    <Item floatingLabel style={styles.formItem} success={this.props.successUser}
+                          error={this.props.errorUser}>
+                        <Label style={styles.formLabel}>Usuario</Label>
+                        <Input
+                            value={this.props.username}
+                            onChangeText={this.props.HandlerUsername}
+                            autoCapitalize="none"
+                            blurOnSubmit={false}
+                            getRef={input => {
+                                this.userRef = input;
+                            }}
+                            onSubmitEditing={() => {
+                                this.passRef._root.focus();
+                            }}
+                            returnKeyType={"next"}
+                        />
+                        <Icon
+                            type="FontAwesome"
+                            name={this.props.username != "" ? "check-circle" : ""}
+                            style={this.props.styleUser}/>
+                    </Item>
+                    <Item floatingLabel style={styles.formItem} error={this.props.errorPass}
+                          success={this.props.successPass}>
+                        <Label style={styles.formLabel}>Senha</Label>
+                        <Input
+                            value={this.props.password}
+                            onChangeText={this.props.HandlerPassword}
+                            secureTextEntry={this.props.PassHide}
+                            autoCapitalize="none"
+                            getRef={input => {
+                                this.passRef = input;
+                            }}
+                            onSubmitEditing={() => this.props.submitRegister(this.props.name, this.props.email, this.props.username, this.props.password)}
+                        />
+                        <Icon
+                            type="Feather"
+                            name={this.props.PassHide == true ? "eye-off" : "eye"}
+                            onPress={() => this.props.showPass(this.props.PassHide)}
+                            style={{color: '#CCCCCC', fontSize: 15}}/>
+                    </Item>
+                </View>
+                <View style={styles.buttonArea}>
+                    <View style={styles.buttonContent}>
+                        <TouchableOpacity
+                            onPress={() => this.props.submitRegister(this.props.name, this.props.email, this.props.username, this.props.password)}
+                            style={[styles.button, styles.buttonBg]}>
+                            <Text style={styles.buttonText}>Cadastrar</Text>
+                        </TouchableOpacity>
+                    </View>
+                    <View style={styles.buttonContent}>
+                        <TouchableOpacity onPress={() => this.props.navigation.navigate('Login')}
+                                          style={styles.signupButton}>
+                            <Text style={styles.signupText}>Já possui conta? Acesse já!</Text>
+                        </TouchableOpacity>
+                    </View>
+                </View>
+            </KeyboardAvoidingView>
+        );
+
+    }
+
+}
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: '#FFF',
+    }
+  });
